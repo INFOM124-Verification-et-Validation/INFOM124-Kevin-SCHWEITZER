@@ -8,7 +8,6 @@ import nl.tudelft.jpacman.board.BoardFactory;
 import nl.tudelft.jpacman.sprite.PacManSprites;
 import nl.tudelft.jpacman.level.PlayerFactory;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -60,8 +59,93 @@ public class InkyTest {
         player = playerFactory.createPacMan();
         level.registerPlayer(player); // Register the player in the level
         player.setDirection(Direction.NORTH); // Set the player's initial direction
-
         inky = Navigation.findUnitInBoard(Inky.class, level.getBoard());
         blinky = Navigation.findUnitInBoard(Blinky.class, level.getBoard());
+
+        Optional<Direction> nextMove = inky.nextAiMove();
+        assertThat(nextMove).isPresent();
+        assertThat(nextMove.get()).isEqualTo(Direction.NORTH);
+    }
+
+    @Test
+    void testPacmanFacesUpwardsTowardsBlinkyWithInkyOverHim(){
+        String[] map = {
+            "################",
+            "#######I########",
+            "####### ########",
+            "####### ########",
+            "####### ########",
+            "####### ########",
+            "####### ########",
+            "#######B########",
+            "####### ########",
+            "#######P########",
+            "####### ########",
+            "####### ########",
+            "####### ########",
+            "####### ########",
+            "####### ########",
+            "####### ########",
+            "################",
+        };
+        Level level = ghostMapParser.parseMap(List.of(map));
+        PlayerFactory playerFactory = new PlayerFactory(new PacManSprites());
+        player = playerFactory.createPacMan();
+        level.registerPlayer(player);
+        player.setDirection(Direction.NORTH);
+        inky = Navigation.findUnitInBoard(Inky.class, level.getBoard());
+        blinky = Navigation.findUnitInBoard(Blinky.class, level.getBoard());
+        Optional<Direction> nextMove = inky.nextAiMove();
+        assertThat(nextMove).isPresent();
+        assertThat(nextMove.get()).isEqualTo(Direction.SOUTH);
+    }
+
+    @Test
+    void testNoPacman(){
+        String[] map = {
+            "##########",
+            "##B  I####",
+            "##########"
+        };
+        Level level = ghostMapParser.parseMap(List.of(map));
+        inky = Navigation.findUnitInBoard(Inky.class, level.getBoard());
+        blinky = Navigation.findUnitInBoard(Blinky.class, level.getBoard());
+        Optional<Direction> nextMove = inky.nextAiMove();
+        // No Pacman, no nextMove
+        assertThat(nextMove).isNotPresent();
+    }
+
+    @Test
+    void testNoBlinky(){
+        String[] map = {
+            "##########",
+            "##P  I####",
+            "##########"
+        };
+        Level level = ghostMapParser.parseMap(List.of(map));
+        PlayerFactory playerFactory = new PlayerFactory(new PacManSprites());
+        player = playerFactory.createPacMan();
+        inky = Navigation.findUnitInBoard(Inky.class, level.getBoard());
+        level.registerPlayer(player);
+        player.setDirection(Direction.EAST);
+
+        Optional<Direction> nextMove = inky.nextAiMove();
+        // No Blinky, no nextMove
+        assertThat(nextMove).isNotPresent();
+    }
+    @Test
+    void testNoTwoSquaresInFrontOfPacman(){
+        String[] map = {
+            "#########",
+            "#I#B###P#",
+            "#########"
+        };
+        Level level = ghostMapParser.parseMap(List.of(map));
+        PlayerFactory playerFactory = new PlayerFactory(new PacManSprites());
+        player = playerFactory.createPacMan();
+        inky = Navigation.findUnitInBoard(Inky.class, level.getBoard());
+        blinky = Navigation.findUnitInBoard(Blinky.class, level.getBoard());
+        Optional<Direction> nextMove = inky.nextAiMove();
+        assertThat(nextMove).isNotPresent();
     }
 }
