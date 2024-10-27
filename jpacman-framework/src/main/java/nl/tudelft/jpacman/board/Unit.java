@@ -121,9 +121,11 @@ public abstract class Unit {
         Direction targetDirection = this.getDirection();
         Square destination = this.getSquare();
         for (int i = 0; i < amountToLookAhead; i++) {
+            if (destination == null) {
+                return this.getSquare();
+            }
             destination = destination.getSquareAt(targetDirection);
         }
-
-        return destination;
+        return destination != null ? destination : this.getSquare();
     }
 }
