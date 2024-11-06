@@ -7,8 +7,6 @@ import nl.tudelft.jpacman.level.LevelFactory;
 import nl.tudelft.jpacman.board.BoardFactory;
 import nl.tudelft.jpacman.sprite.PacManSprites;
 import nl.tudelft.jpacman.level.PlayerFactory;
-import static org.mockito.Mockito.mock;
-
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,8 +49,7 @@ public class ClydeTest {
         Level level = ghostMapParser.parseMap(List.of(map));
 
         // Register the player and set its direction
-        PacManSprites mockSprites = mock(PacManSprites.class);
-        PlayerFactory playerFactory = new PlayerFactory(mockSprites);
+        PlayerFactory playerFactory = new PlayerFactory(new PacManSprites());
         player = playerFactory.createPacMan();
         level.registerPlayer(player); // Register the player in the level
         player.setDirection(Direction.EAST); // Set the player's initial direction
