@@ -257,6 +257,15 @@
 						<param>nl.tudelft.jpacman.npc*</param>
 					</targetClasses>
 				</configuration>
+				<executions>
+					<execution>
+						<id>pitest</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>mutationCoverage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
