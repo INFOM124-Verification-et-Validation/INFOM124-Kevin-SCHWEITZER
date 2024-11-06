@@ -8,7 +8,6 @@ import nl.tudelft.jpacman.board.BoardFactory;
 import nl.tudelft.jpacman.sprite.PacManSprites;
 import nl.tudelft.jpacman.level.PlayerFactory;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
