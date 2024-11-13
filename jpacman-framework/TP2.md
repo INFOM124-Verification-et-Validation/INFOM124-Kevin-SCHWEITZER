@@ -8,9 +8,9 @@ Analyze the requirements found in `docs/scenarios.md` and derive a decision tabl
 
 |                 |             |                        |                                                                     |         |
 |-----------------|-------------|------------------------|---------------------------------------------------------------------|---------|
-| **Collider**    | Ghost       | Pacman                 | Pacman                                                              | Pacman  |
-| **Collidee**    | Pellet      | Ghost                  | Pellet                                                              | Wall    |
-| **Consequence** | Hide pellet | Pacman dies, game over | Earn points, remove pellet and end the game if it's the last pellet | No move |
+| **Collider**    | Ghost       | Pacman                 | Pacman                                                              | Ghost   |  
+| **Collidee**    | Pellet      | Ghost                  | Pellet                                                              | Ghost   |
+| **Consequence** | Hide pellet | Pacman dies, game over | Earn points, remove pellet and end the game if it's the last pellet | Nothing |
 
 
 Based on the decision table above, derive a JUnit test suite for the `level.PlayerCollisions` class using the **specification-based testing** (see the `analysis-template.md` file) and **structural testing** frameworks. You should be as rigorous as possible here. Think not only of collisions that result in something, but also on collisions where "nothing happens".

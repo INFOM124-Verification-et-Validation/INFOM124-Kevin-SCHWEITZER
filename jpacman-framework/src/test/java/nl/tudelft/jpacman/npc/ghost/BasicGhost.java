@@ -1,16 +1,31 @@
 package nl.tudelft.jpacman.npc.ghost;
 
-class BasicGhost extends Ghost {
+import nl.tudelft.jpacman.npc.Ghost;
+import nl.tudelft.jpacman.board.Direction;
+import nl.tudelft.jpacman.sprite.Sprite;
+
+import java.util.Map;
+import java.util.Optional;
+
+/**
+ * Basic implementation of a ghost.
+ */
+public class BasicGhost extends Ghost {
 
     /**
-     * Creates a new ghost.
+     * Creates a new basic ghost with the specified sprites and move parameters.
+     *
+     * @param spriteMap         The sprites for every direction.
+     * @param moveInterval      The base interval of movement.
+     * @param intervalVariation The variation of the interval.
      */
-    BasicGhost() {
-        super(GhostColor.RED, 200);
+    public BasicGhost(Map<Direction, Sprite> spriteMap, int moveInterval, int intervalVariation) {
+        super(spriteMap, moveInterval, intervalVariation);
     }
 
     @Override
-    public void move() {
-        // Do nothing
+    public Optional<Direction> nextAiMove() {
+        // BasicGhost has no specific AI, so it doesn't suggest a move
+        return Optional.empty();
     }
 }
